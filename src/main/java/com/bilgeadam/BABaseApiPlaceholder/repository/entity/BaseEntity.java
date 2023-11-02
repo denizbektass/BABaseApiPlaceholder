@@ -7,14 +7,14 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
+
 @SuperBuilder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @MappedSuperclass
-public class BaseEntity implements Serializable {
+public class BaseEntity {
 
     private Long createDate;
     private Long updateDate;
-
 }
