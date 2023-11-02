@@ -32,6 +32,14 @@ public class GlobalExceptionHandler {
         errorMessage.setMessage(ex.getMessage());
         return  new  ResponseEntity<>(errorMessage,httpStatus);
     }
+    @ExceptionHandler(FakeBaseApiManagerException.class)
+    public ResponseEntity<ErrorMessage> handleFakeBaseApiManagerException(FakeBaseApiManagerException ex){
+        ErrorType errorType=ex.getErrorType();
+        HttpStatus httpStatus=errorType.getStatus();
+        ErrorMessage errorMessage=createError(errorType,ex);
+        errorMessage.setMessage(ex.getMessage());
+        return  new  ResponseEntity<>(errorMessage,httpStatus);
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorMessage> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex){
