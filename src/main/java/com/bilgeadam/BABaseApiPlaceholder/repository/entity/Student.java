@@ -12,14 +12,14 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Student extends BaseEntity{
+public class Student extends BaseEntity {
     @Id
     @GeneratedValue
     private Long id;
     private String name;
     private String surname;
     @Column(unique = true)
-    private String personalEmail ;
+    private String personalEmail;
     @Column(unique = true)
     private String baEmail;
     @Column(unique = true)

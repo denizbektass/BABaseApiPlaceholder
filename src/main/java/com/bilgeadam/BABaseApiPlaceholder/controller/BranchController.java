@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Branch")
+@RequestMapping("/branch")
 @RequiredArgsConstructor
 public class BranchController {
 
@@ -21,10 +21,10 @@ public class BranchController {
         return ResponseEntity.ok(service.findAll());
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<Branch> save(Branch branch) {
-        return ResponseEntity.ok(service.save(branch));
-    }
+//    @PostMapping("/save")
+//    public ResponseEntity<Branch> save(Branch branch) {
+//        return ResponseEntity.ok(service.save(branch));
+//    }
 
 
     @GetMapping("/findById/{id}")

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper=false)
 @AllArgsConstructor
@@ -26,7 +27,5 @@ public class CourseGroup extends BaseEntity {
     private LocalDate endDate;
     private Long courseId;
     private Long branchId;
-//    @OneToMany
-//    private List<Trainer> trainers;
+    private List<Long> trainers;
 }
-

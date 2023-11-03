@@ -11,18 +11,11 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"name","city"}))
-public class Branch extends BaseEntity{
-
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"name", "city"}))
+public class Branch extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
     private String city;
-
-//    @OneToMany(mappedBy = "branch")
-//    private List<Group> group;
-
-
 }

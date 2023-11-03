@@ -9,9 +9,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface IStudentRepository extends JpaRepository <Student,Long>{
+public interface IStudentRepository extends JpaRepository<Student, Long> {
     List<Student> findByNameIgnoreCase(String name);
+
     List<Student> findBySurnameIgnoreCase(String surname);
-    Optional<Student> findByEmailIgnoreCase(String email);
+
+    Optional<Student> findByBaEmailIgnoreCase(String email);
+
     List<Student> findByGroupId(Long groupId);
 }
