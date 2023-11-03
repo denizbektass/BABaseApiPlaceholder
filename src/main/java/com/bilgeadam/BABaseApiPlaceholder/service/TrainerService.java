@@ -15,8 +15,6 @@ import java.util.Locale;
 
 @Service
 public class TrainerService extends ServiceManager<Trainer, Long> {
-
-
     private final ITrainerRepository trainerRepository;
 
     public TrainerService(ITrainerRepository trainerRepository) {
@@ -25,38 +23,38 @@ public class TrainerService extends ServiceManager<Trainer, Long> {
     }
 
     public Trainer findTrainerById(Long id) {
-        return findById(id).orElseThrow(()-> new TrainerManagerException(ErrorType.TRAINER_NOT_FOUND,"Aranan ID'de kimse bulunamadı!"));
+        return findById(id).orElseThrow(() -> new TrainerManagerException(ErrorType.TRAINER_NOT_FOUND, "Aranan ID'de kimse bulunamadı!"));
     }
 
-    public List<Trainer> findByName(String name){
+    public List<Trainer> findByName(String name) {
         List<Trainer> trainerList = trainerRepository.findByNameIgnoreCase(name);
         if (trainerList.isEmpty())
-            throw new TrainerManagerException(ErrorType.TRAINER_NOT_FOUND,"Aradığınız isimde kimse yok!");
+            throw new TrainerManagerException(ErrorType.TRAINER_NOT_FOUND, "Aradığınız isimde kimse yok!");
         return trainerList;
     }
 
-    public List<Trainer> findBySurname(String surname){
+    public List<Trainer> findBySurname(String surname) {
         List<Trainer> trainerList = trainerRepository.findBySurnameIgnoreCase(surname);
         if (trainerList.isEmpty())
-            throw new TrainerManagerException(ErrorType.TRAINER_NOT_FOUND,"Aradığınız soyisimde kimse yok!");
+            throw new TrainerManagerException(ErrorType.TRAINER_NOT_FOUND, "Aradığınız soyisimde kimse yok!");
         return trainerList;
     }
-    public Trainer findByEmail(String email){
-        return trainerRepository.findByEmail(email).orElseThrow(()-> new TrainerManagerException(ErrorType.TRAINER_NOT_FOUND,"Aradığınız mail adresi mevcut değil!"));
+
+    public Trainer findByEmail(String email) {
+        return trainerRepository.findByEmail(email).orElseThrow(() -> new TrainerManagerException(ErrorType.TRAINER_NOT_FOUND, "Aradığınız mail adresi mevcut değil!"));
     }
 
-    public List<Trainer> findByTrainerRole(String trainerRole){
+    public List<Trainer> findByTrainerRole(String trainerRole) {
 
         List<ETrainerRole> filteredList = Arrays.stream(ETrainerRole.values())
                 .filter(x -> x.name().contains(Helpers.handleTurkish(trainerRole).toUpperCase(Locale.ENGLISH))).toList();
-        if ( filteredList.isEmpty())
+        if (filteredList.isEmpty())
             throw new TrainerManagerException(ErrorType.TRAINER_ROLE_NOT_FOUND);
         List<Trainer> trainerList = trainerRepository.findByTrainerRoleIn(filteredList);
         if (trainerList.isEmpty())
             throw new TrainerManagerException(ErrorType.TRAINER_NOT_FOUND);
         return trainerList;
     }
-
 
 
 }

@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import java.io.Serializable;
-
 
 @SuperBuilder
 @Data
@@ -14,7 +12,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @MappedSuperclass
 public class BaseEntity {
-
     private Long createDate;
     private Long updateDate;
 }

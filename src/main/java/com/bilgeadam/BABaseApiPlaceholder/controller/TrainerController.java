@@ -20,10 +20,10 @@ public class TrainerController{
         return ResponseEntity.ok(trainerService.findAll());
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<Trainer> save(Trainer trainer){
-        return ResponseEntity.ok(trainerService.save(trainer));
-    }
+//    @PostMapping("/save")
+//    public ResponseEntity<Trainer> save(Trainer trainer){
+//        return ResponseEntity.ok(trainerService.save(trainer));
+//    }
 
     @GetMapping("/findbyid/{id}")
     public ResponseEntity<Trainer> findTrainerById(@PathVariable Long id){

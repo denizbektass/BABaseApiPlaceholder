@@ -9,13 +9,9 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/group")
-public class CourseGroupController {
-    private final CourseGroupService courseGroupService;
-    @GetMapping
-    public ResponseEntity<String> test() {
-        return ResponseEntity.ok("Max Width");
-    }
+@RequestMapping("/coursegroup")
+public class CourseGroupController {    private final CourseGroupService courseGroupService;
+
     @GetMapping("/findall")
     public ResponseEntity<List<CourseGroup>> findAll(){
         return ResponseEntity.ok(courseGroupService.findAll());
@@ -25,17 +21,17 @@ public class CourseGroupController {
     public ResponseEntity<CourseGroup> findGroupById(@PathVariable Long id){
         return ResponseEntity.ok(courseGroupService.findGroupById(id));
     }
-    @GetMapping("/findgroupsbycourse/{course}")
+    @GetMapping("/findcoursegroupsbycourse/{course}")
     public ResponseEntity<List<CourseGroup>> findByCourse(@PathVariable("course") Long courseId){
         return ResponseEntity.ok(courseGroupService.findByCourse(courseId));
     }
 
-    @GetMapping("/findgroupbybranch/{branch}")
+    @GetMapping("/findcoursegroupbybranch/{branch}")
     public ResponseEntity<List<CourseGroup>> findGroupByBranch(@PathVariable("branch") Long branchId){
         return ResponseEntity.ok(courseGroupService.findByBranchId(branchId));
     }
 
-    @GetMapping("/findgroupbyname/{name}")
+    @GetMapping("/findcoursegroupbyname/{name}")
     public ResponseEntity<CourseGroup> findByName(@PathVariable("name") String name){
         return ResponseEntity.ok(courseGroupService.findByName(name));
     }
