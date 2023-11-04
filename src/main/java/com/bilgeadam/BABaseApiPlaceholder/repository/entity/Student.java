@@ -28,3 +28,6 @@ public class Student extends BaseEntity {
     private Long branchId;
 
 }
+/*
+ *
+ */
