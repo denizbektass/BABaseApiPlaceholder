@@ -5,9 +5,11 @@ import com.bilgeadam.BABaseApiPlaceholder.exception.ErrorType;
 import com.bilgeadam.BABaseApiPlaceholder.repository.ICourseRepository;
 import com.bilgeadam.BABaseApiPlaceholder.repository.entity.Course;
 import com.bilgeadam.BABaseApiPlaceholder.utility.ServiceManager;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class CourseService extends ServiceManager<Course,Long> {
 
     private final ICourseRepository courseRepository;
