@@ -4,11 +4,14 @@ springdoc:
   swagger-ui:
     path: swagger
 spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
   h2:
     console:
       enabled: true
   datasource:
-    url: jdbc:h2:mem:fakedatadb
+    url: jdbc:h2:file:~/fakedatadb
     driverClassName: org.h2.Driver
     username: user
     password: root
