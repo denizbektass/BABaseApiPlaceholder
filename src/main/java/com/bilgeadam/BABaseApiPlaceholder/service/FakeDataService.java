@@ -6,6 +6,8 @@ import com.bilgeadam.BABaseApiPlaceholder.repository.enums.ETrainerRole;
 import com.github.javafaker.Faker;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -32,7 +34,13 @@ public class FakeDataService {
         this.trainerRepository = trainerRepository;
     }
 
-    @PostConstruct
+    @Bean
+    public ApplicationRunner applicationRunner(FakeDataService fakeDataService) {
+        return args -> {
+            fakeDataService.generateFakeData();
+        };
+    }
+
     public void generateFakeData() {
         generateStudents();
         generateTrainers();
