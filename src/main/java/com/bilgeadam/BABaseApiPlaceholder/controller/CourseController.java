@@ -16,12 +16,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CourseController {
     private final CourseService courseService;
-    @GetMapping("/findall")
+    @GetMapping("/find-all")
     public ResponseEntity<List<Course>> findAll(){
         return ResponseEntity.ok(courseService.findAll());
     }
 
-    @GetMapping("/findstudentbyname/{name}")
+    @GetMapping("/find-by-name/{name}")
     public ResponseEntity<List<Course>> findStudentByName(@PathVariable String name){
         return ResponseEntity.ok(courseService.findCourseByName(name));
     }

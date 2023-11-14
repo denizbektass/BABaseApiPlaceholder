@@ -15,26 +15,26 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StudentController {
     private final StudentService studentService;
-    @GetMapping("/findall")
+    @GetMapping("/find-all")
     public ResponseEntity<List<Student>> findAll(){
         return ResponseEntity.ok(studentService.findAll());
     }
 
-    @GetMapping("/findstudentbyname/{name}")
+    @GetMapping("/find-student-by-name/{name}")
     public ResponseEntity<List<Student>> findStudentByName(@PathVariable String name){
         return ResponseEntity.ok(studentService.findStudentByName(name));
     }
-    @GetMapping("/findstudentbysurname/{surname}")
+    @GetMapping("/find-student-by-surname/{surname}")
     public ResponseEntity<List<Student>> findStudentBySurname(@PathVariable String surname){
         return ResponseEntity.ok(studentService.findStudentBySurname(surname));
     }
 
-    @GetMapping("/findstudentbyemail/{email}")
+    @GetMapping("/find-student-by-email/{email}")
     public ResponseEntity<List<Student>> findStudentByEmail(@PathVariable String email){
         return ResponseEntity.ok(studentService.findStudentByEmail(email));
     }
 
-    @GetMapping("/findstudentbygroupid/{groupId}")
+    @GetMapping("/find-student-by-group-id/{groupId}")
     public ResponseEntity<List<Student>> findStudentByGroupId(@PathVariable Long groupId){
         return ResponseEntity.ok(studentService.findStudentByGroupId(groupId));
     }

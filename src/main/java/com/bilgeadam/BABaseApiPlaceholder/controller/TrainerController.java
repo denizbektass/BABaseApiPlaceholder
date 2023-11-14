@@ -15,7 +15,7 @@ public class TrainerController{
 
     private final TrainerService trainerService;
 
-    @GetMapping("/findall")
+    @GetMapping("/find-all")
     public ResponseEntity<List<Trainer>> findAll(){
         return ResponseEntity.ok(trainerService.findAll());
     }
@@ -25,24 +25,24 @@ public class TrainerController{
 //        return ResponseEntity.ok(trainerService.save(trainer));
 //    }
 
-    @GetMapping("/findbyid/{id}")
+    @GetMapping("/find-by-id/{id}")
     public ResponseEntity<Trainer> findTrainerById(@PathVariable Long id){
         return  ResponseEntity.ok(trainerService.findTrainerById(id));
     }
 
-    @GetMapping("/findbyname/{name}")
+    @GetMapping("/find-by-name/{name}")
     public ResponseEntity<List<Trainer>> findTrainerByName(@PathVariable String name){
         return ResponseEntity.ok(trainerService.findByName(name));
     }
-    @GetMapping("/findbysurname/{surname}")
+    @GetMapping("/find-by-surname/{surname}")
     public ResponseEntity<List<Trainer>> findTrainerBySurname(@PathVariable String surname){
         return ResponseEntity.ok(trainerService.findBySurname(surname));
     }
-    @GetMapping("/findbyemail/{email}")
+    @GetMapping("/find-by-email/{email}")
     public ResponseEntity<Trainer> findTrainerByEmail(@PathVariable String email){
         return ResponseEntity.ok(trainerService.findByEmail(email));
     }
-    @GetMapping("/findbytrainerrole/{trainerRole}")
+    @GetMapping("/find-by-trainer-role/{trainerRole}")
     public ResponseEntity<List<Trainer>> findByTrainerRole(@PathVariable String trainerRole){
         return ResponseEntity.ok(trainerService.findByTrainerRole(trainerRole));
     }
