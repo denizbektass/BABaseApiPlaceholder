@@ -16,7 +16,7 @@ public class BranchController {
 
     private final BranchService service;
 
-    @GetMapping("/findAll")
+    @GetMapping("/find-all")
     public ResponseEntity<List<Branch>> findAll() {
         return ResponseEntity.ok(service.findAll());
     }
@@ -27,22 +27,22 @@ public class BranchController {
 //    }
 
 
-    @GetMapping("/findById/{id}")
+    @GetMapping("/find-by-id/{id}")
     public ResponseEntity<Branch> findById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findBranchById(id));
     }
 
-    @GetMapping("/findByName/{name}")
+    @GetMapping("/find-by-name/{name}")
     public ResponseEntity<List<Branch>> findByName(@PathVariable String name) {
         return ResponseEntity.ok(service.findByName(name));
     }
 
-    @GetMapping("/findByCity/{city}")
+    @GetMapping("/find-by-city/{city}")
     public ResponseEntity<List<Branch>> findByCity(@PathVariable String city) {
         return ResponseEntity.ok(service.findByCity(city));
     }
 
-    @GetMapping("/findByNameAndCity")
+    @GetMapping("/find-by-name-and-city")
     public ResponseEntity<Branch> findByNameAndCity(FindByNameAndCityRequestDto dto) {
         return ResponseEntity.ok(service.findByNameAndCity(dto));
     }
