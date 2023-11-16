@@ -25,7 +25,12 @@ public class BranchController {
 //    public ResponseEntity<Branch> save(Branch branch) {
 //        return ResponseEntity.ok(service.save(branch));
 //    }
-
+//
+//    @DeleteMapping("/delete")
+//    public ResponseEntity<Void> delete(Long id){
+//        service.deleteById(id);
+//        return ResponseEntity.ok().build();
+//    }
 
     @GetMapping("/find-by-id/{id}")
     public ResponseEntity<Branch> findById(@PathVariable Long id) {

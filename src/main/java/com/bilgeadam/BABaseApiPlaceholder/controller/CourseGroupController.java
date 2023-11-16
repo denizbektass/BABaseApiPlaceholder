@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/coursegroup")
 public class CourseGroupController {    private final CourseGroupService courseGroupService;
 
-    @GetMapping("/find-all-course-group")
+    @GetMapping("/find-all")
     public ResponseEntity<List<CourseGroup>> findAll(){
         return ResponseEntity.ok(courseGroupService.findAll());
     }
