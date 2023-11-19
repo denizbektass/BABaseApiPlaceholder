@@ -96,7 +96,7 @@ public class FakeDataService {
     private void generateCourses() {
         for (int i = 0; i < 5; i++) {
             Course course = new Course();
-            course.setName(faker.job().field());
+            course.setName(faker.company().name());
             courseRepository.save(course);
         }
     }
