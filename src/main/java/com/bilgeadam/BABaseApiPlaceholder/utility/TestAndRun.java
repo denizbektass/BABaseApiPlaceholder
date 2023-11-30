@@ -4,6 +4,7 @@ import com.bilgeadam.BABaseApiPlaceholder.repository.entity.Branch;
 import com.bilgeadam.BABaseApiPlaceholder.repository.entity.CourseGroup;
 import com.bilgeadam.BABaseApiPlaceholder.repository.entity.Student;
 import com.bilgeadam.BABaseApiPlaceholder.repository.entity.Trainer;
+import com.bilgeadam.BABaseApiPlaceholder.repository.enums.EStatus;
 import com.bilgeadam.BABaseApiPlaceholder.repository.enums.ETrainerRole;
 import com.bilgeadam.BABaseApiPlaceholder.service.BranchService;
 import com.bilgeadam.BABaseApiPlaceholder.service.CourseGroupService;
@@ -33,8 +34,6 @@ public class TestAndRun {
         if (byId.isEmpty()) {
             defaultBranchData();
             defaultTrainerData();
-            defaultStudentData();
-            defaultCourseGroupData();
         }
     }
 
@@ -111,6 +110,14 @@ public class TestAndRun {
                 .personalEmail("engin@gmail.com")
                 .baEmail("engin@bilgeadam.com")
                 .baBoostEmail("engin@bilgeadamboost.com")
+                .phoneNumber("05112323232")
+                .address("Kağıthane / İstanbul")
+                .school("İstanbul Üniversitesi")
+                .department("Matematik Bölümü")
+                .birthDate(LocalDate.of(1996,11,28))
+                .birthPlace("İstanbul")
+                .status(EStatus.ACTIVE)
+                .internShipStatus(EStatus.PASSIVE)
                 .groupId(1L)
                 .branchId(1L)
                 .build());
@@ -120,6 +127,14 @@ public class TestAndRun {
                 .personalEmail("berk@gmail.com")
                 .baEmail("berk@bilgeadam.com")
                 .baBoostEmail("berk@bilgeadamboost.com")
+                .phoneNumber("05114445566")
+                .address("Beykoz / İstanbul")
+                .school("Marmara Üniversitesi")
+                .department("Bilgisayar Mühendisliği Bölümü")
+                .birthDate(LocalDate.of(1993,05,05))
+                .birthPlace("Yozgat")
+                .status(EStatus.ACTIVE)
+                .internShipStatus(EStatus.PASSIVE)
                 .groupId(2L)
                 .branchId(2L)
                 .build());
@@ -129,6 +144,14 @@ public class TestAndRun {
                 .personalEmail("doruk@gmail.com")
                 .baEmail("doruk@bilgeadam.com")
                 .baBoostEmail("doruk@bilgeadamboost.com")
+                .phoneNumber("05116666666")
+                .address("Etimesgut / Ankara")
+                .school("Eskişehir Osmangazi Üniversitesi")
+                .department("Makine Mühendisliği Bölümü")
+                .birthDate(LocalDate.of(1996,06,11))
+                .birthPlace("İstanbul")
+                .status(EStatus.ACTIVE)
+                .internShipStatus(EStatus.PASSIVE)
                 .groupId(3L)
                 .branchId(3L)
                 .build());
@@ -138,6 +161,14 @@ public class TestAndRun {
                 .personalEmail("leventtarik@gmail.com")
                 .baEmail("leventtarik@bilgeadam.com")
                 .baBoostEmail("leventtarik@bilgeadamboost.com")
+                .phoneNumber("05112323232")
+                .address("Dikili / İzmir")
+                .school("Ege Üniversitesi")
+                .department("Yazılım Bölümü")
+                .birthDate(LocalDate.of(2000,03,18))
+                .birthPlace("Balıkesir")
+                .status(EStatus.ACTIVE)
+                .internShipStatus(EStatus.PASSIVE)
                 .groupId(4L)
                 .branchId(4L)
                 .build());

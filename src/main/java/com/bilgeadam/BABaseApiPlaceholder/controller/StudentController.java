@@ -1,5 +1,6 @@
 package com.bilgeadam.BABaseApiPlaceholder.controller;
 
+import com.bilgeadam.BABaseApiPlaceholder.dto.request.SendStudentsRequestDto;
 import com.bilgeadam.BABaseApiPlaceholder.repository.entity.CourseGroup;
 import com.bilgeadam.BABaseApiPlaceholder.repository.entity.Student;
 import com.bilgeadam.BABaseApiPlaceholder.repository.entity.Trainer;
@@ -38,4 +39,11 @@ public class StudentController {
     public ResponseEntity<List<Student>> findStudentByGroupId(@PathVariable Long groupId){
         return ResponseEntity.ok(studentService.findStudentByGroupId(groupId));
     }
+
+    @GetMapping("/find-all-base-students")
+    public ResponseEntity<List<SendStudentsRequestDto>> findAllBaseStudents() {
+        List<SendStudentsRequestDto> studentDtos = studentService.findAllBaseStudents();
+        return ResponseEntity.ok(studentDtos);
+    }
+
 }
