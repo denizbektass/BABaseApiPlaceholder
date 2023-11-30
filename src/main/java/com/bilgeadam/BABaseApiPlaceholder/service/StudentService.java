@@ -1,24 +1,55 @@
 package com.bilgeadam.BABaseApiPlaceholder.service;
 
+import com.bilgeadam.BABaseApiPlaceholder.dto.request.SendStudentsRequestDto;
 import com.bilgeadam.BABaseApiPlaceholder.exception.ErrorType;
 import com.bilgeadam.BABaseApiPlaceholder.exception.StudentManagerException;
+import com.bilgeadam.BABaseApiPlaceholder.manager.IUserManager;
 import com.bilgeadam.BABaseApiPlaceholder.repository.IStudentRepository;
-import com.bilgeadam.BABaseApiPlaceholder.repository.entity.CourseGroup;
 import com.bilgeadam.BABaseApiPlaceholder.repository.entity.Student;
 import com.bilgeadam.BABaseApiPlaceholder.utility.ServiceManager;
-import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+
+import java.util.*;
 
 @Service
 public class StudentService extends ServiceManager<Student,Long> {
     private final IStudentRepository studentRepository;
+    private final IUserManager userManager;
 
-    public StudentService(IStudentRepository studentRepository) {
+    public StudentService(IStudentRepository studentRepository, IUserManager userManager) {
         super(studentRepository);
         this.studentRepository = studentRepository;
+        this.userManager = userManager;
+    }
+
+    public List<SendStudentsRequestDto> findAllBaseStudents() {
+        List<Student> students = studentRepository.findAll();
+
+        return convertToDtoList(students);
+    }
+
+    private List<SendStudentsRequestDto> convertToDtoList(List<Student> students) {
+        List<SendStudentsRequestDto> studentDtos = new ArrayList<>();
+
+        for (Student student : students) {
+            SendStudentsRequestDto dto = new SendStudentsRequestDto();
+            dto.setUserId(student.getUuid().toString());
+            dto.setName(student.getName());
+            dto.setSurname(student.getSurname());
+            dto.setEmail(student.getPersonalEmail());
+            dto.setPhoneNumber(student.getPhoneNumber());
+            dto.setAddress(student.getAddress());
+            dto.setSchool(student.getSchool());
+            dto.setDepartment(student.getDepartment());
+            dto.setBirthDate(student.getBirthDate());
+            dto.setBirthPlace(student.getBirthPlace());
+            dto.setStatus(student.getStatus());
+            dto.setInternShipStatus(student.getInternShipStatus());
+            dto.setGroupNameList(List.of(student.getCourseName()));
+            studentDtos.add(dto);
+        }
+
+        return studentDtos;
     }
 
     public List<Student> findStudentByName(String name) {

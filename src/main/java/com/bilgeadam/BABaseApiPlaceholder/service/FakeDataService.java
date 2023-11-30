@@ -4,15 +4,16 @@ import com.bilgeadam.BABaseApiPlaceholder.repository.*;
 import com.bilgeadam.BABaseApiPlaceholder.repository.entity.*;
 import com.bilgeadam.BABaseApiPlaceholder.repository.enums.ETrainerRole;
 import com.github.javafaker.Faker;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
@@ -42,18 +43,29 @@ public class FakeDataService {
     }
 
     public void generateFakeData() {
+
+        generateCourseGroups();
         generateStudents();
         generateTrainers();
         generateBranches();
         generateCourses();
-        generateCourseGroups();
     }
 
     private void generateStudents() {
-        for (int i = 0; i < 100; i++) {
+        List<CourseGroup> allCourseGroups = courseGroupRepository.findAll();
+        Random random = new Random();
+        for (int i = 0; i < 40; i++) {
             Student student = new Student();
             String firstName = faker.name().firstName();
             String lastName = faker.name().lastName();
+            String streetAddress = faker.address().streetAddress();
+            String city = faker.address().city();
+            String formattedPhoneNumber = customizePhoneNumber();
+            String schoolName = faker.university().name();
+            String departmentName = faker.educator().course();
+            String cityBorn = faker.address().city();
+            LocalDate birthdayDate = faker.date().birthday().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            CourseGroup randomCourseGroup = allCourseGroups.get(random.nextInt(allCourseGroups.size()));
 
 
             student.setName(firstName);
@@ -61,10 +73,17 @@ public class FakeDataService {
             student.setPersonalEmail(firstName.toLowerCase() + "." + lastName.toLowerCase() + "@gmail.com");
             student.setBaEmail(firstName.toLowerCase() + "." + lastName.toLowerCase() + "@bilgeadam.com");
             student.setBaBoostEmail(firstName.toLowerCase() + "." + lastName.toLowerCase() + "@bilgeadamboost.com");
+            student.setAddress(streetAddress + " / " + city);
+            student.setPhoneNumber(formattedPhoneNumber);
+            student.setDepartment(departmentName);
+            student.setSchool(schoolName);
+            student.setBirthPlace(cityBorn);
+            student.setBirthDate(birthdayDate);
             student.setGroupId((long) faker.number().numberBetween(1, 10));
             student.setBranchId((long) faker.number().numberBetween(1, 5));
             student.setCreateDate(generateRandomEpochDay(LocalDate.now(), LocalDate.now().plusMonths(3)));
             student.setUpdateDate(generateRandomEpochDay(LocalDate.now().plusMonths(3), LocalDate.now().plusMonths(6)));
+            student.setCourseName(randomCourseGroup.getName());
             studentRepository.save(student);
         }
     }
@@ -102,9 +121,14 @@ public class FakeDataService {
     }
 
     private void generateCourseGroups() {
+
+        String[] courseNames = {"Java", "Phyton", ".Net"};
         for (int i = 0; i < 10; i++) {
+            String selectedCourseName = courseNames[new Random().nextInt(courseNames.length)];
+            int versionNumber = new Random().nextInt(6) + 5;
+            String courseGroupName = selectedCourseName + versionNumber;
             CourseGroup courseGroup = CourseGroup.builder()
-                    .name(faker.name().name())
+                    .name(courseGroupName)
                     .courseId((long) faker.number().numberBetween(1, 5))
                     .branchId((long) faker.number().numberBetween(1, 5))
                     .startDate(generateRandomLocalDate(LocalDate.now(), LocalDate.now().plusMonths(3)))
@@ -135,5 +159,11 @@ public class FakeDataService {
         long startEpochDay = start.toEpochDay();
         long endEpochDay = end.toEpochDay();
         return ThreadLocalRandom.current().nextLong(startEpochDay, endEpochDay + 1);
+    }
+    private String customizePhoneNumber() {
+        return String.format("+90 (%s) %s-%s",
+                faker.number().numberBetween(500, 599),
+                faker.number().numberBetween(100, 999),
+                faker.number().numberBetween(1000, 9999));
     }
 }
