@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -24,9 +25,11 @@ public class FakeDataService {
     private final IBranchRepository branchRepository;
     private final ICourseRepository courseRepository;
     private final ICourseGroupRepository courseGroupRepository;
+    private final IAbsenceRepository absenceRepository;
 
     @Autowired
-    public FakeDataService(IStudentRepository studentRepository, ITrainerRepository trainerRepository, IBranchRepository branchRepository, ICourseRepository courseRepository, ICourseGroupRepository courseGroupRepository) {
+    public FakeDataService(IStudentRepository studentRepository, ITrainerRepository trainerRepository, IBranchRepository branchRepository, ICourseRepository courseRepository, ICourseGroupRepository courseGroupRepository, IAbsenceRepository absenceRepository) {
+        this.absenceRepository = absenceRepository;
         this.faker = new Faker();
         this.branchRepository = branchRepository;
         this.courseRepository = courseRepository;
@@ -43,12 +46,12 @@ public class FakeDataService {
     }
 
     public void generateFakeData() {
-
         generateCourseGroups();
         generateStudents();
         generateTrainers();
         generateBranches();
         generateCourses();
+        generateAbsences();
     }
 
     private void generateStudents() {
@@ -79,7 +82,7 @@ public class FakeDataService {
             student.setSchool(schoolName);
             student.setBirthPlace(cityBorn);
             student.setBirthDate(birthdayDate);
-            student.setGroupId((long) faker.number().numberBetween(1, 10));
+            student.setGroupId(randomCourseGroup.getId());
             student.setBranchId((long) faker.number().numberBetween(1, 5));
             student.setCreateDate(generateRandomEpochDay(LocalDate.now(), LocalDate.now().plusMonths(3)));
             student.setUpdateDate(generateRandomEpochDay(LocalDate.now().plusMonths(3), LocalDate.now().plusMonths(6)));
@@ -127,6 +130,8 @@ public class FakeDataService {
             String selectedCourseName = courseNames[new Random().nextInt(courseNames.length)];
             int versionNumber = new Random().nextInt(6) + 5;
             String courseGroupName = selectedCourseName + versionNumber;
+            int totalCourseHours = faker.number().numberBetween(30, 600);
+
             CourseGroup courseGroup = CourseGroup.builder()
                     .name(courseGroupName)
                     .courseId((long) faker.number().numberBetween(1, 5))
@@ -134,6 +139,7 @@ public class FakeDataService {
                     .startDate(generateRandomLocalDate(LocalDate.now(), LocalDate.now().plusMonths(3)))
                     .endDate(generateRandomLocalDate(LocalDate.now().plusMonths(3), LocalDate.now().plusMonths(6)))
                     .trainers(generateTrainerIds(3)) // Her kurs grubuna 3 eğitmen
+                    .totalCourseHours(totalCourseHours)
                     .build();
             courseGroupRepository.save(courseGroup);
         }
@@ -166,4 +172,39 @@ public class FakeDataService {
                 faker.number().numberBetween(100, 999),
                 faker.number().numberBetween(1000, 9999));
     }
+
+    private void generateAbsences(){
+        List<Student> students = studentRepository.findAll();
+        List<Course> courses = courseRepository.findAll();
+
+        for (Student student : students){
+            Optional<CourseGroup> courseGroupOpt = courseGroupRepository.findById(student.getGroupId());
+            if (courseGroupOpt.isPresent()) {
+                CourseGroup courseGroup = courseGroupOpt.get();
+                Optional<Course> courseOpt = courses.stream().filter(c -> c.getId().equals(courseGroup.getCourseId())).findFirst();
+                if (courseOpt.isPresent()){
+                    Course course = courseOpt.get();
+                    int totalCourseHours = courseGroup.getTotalCourseHours();
+                    int hourOfAbsenceLimit = (int) Math.ceil(totalCourseHours * 0.10);
+
+                    Absence absence = new Absence();
+                    absence.setStudentId(student.getId());
+                    absence.setCourse(course.getName());
+                    absence.setCourseGroup(courseGroup.getName());
+                    absence.setAbsenceDate(faker.number().numberBetween(1, 365));
+                    absence.setTotalCourseHours(totalCourseHours);
+                    absence.setHourOfAbsence(faker.number().numberBetween(0, hourOfAbsenceLimit));
+                    absence.setHourOfAbsenceLimit(hourOfAbsenceLimit);
+                    absence.setCreateDate(generateRandomEpochDay(LocalDate.now(), LocalDate.now().plusMonths(3)));
+                    absence.setUpdateDate(generateRandomEpochDay(LocalDate.now().plusMonths(3), LocalDate.now().plusMonths(6)));
+
+                    absenceRepository.save(absence);
+                }
+            }
+        }
+    }
+
+
+
+
 }
