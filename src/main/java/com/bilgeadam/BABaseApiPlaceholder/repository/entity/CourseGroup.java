@@ -28,4 +28,5 @@ public class CourseGroup extends BaseEntity {
     private Long courseId;
     private Long branchId;
     private List<Long> trainers;
+    private int totalCourseHours;
 }
