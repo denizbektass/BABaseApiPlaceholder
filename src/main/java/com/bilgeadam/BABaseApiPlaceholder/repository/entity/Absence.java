@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.UUID;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
@@ -19,7 +21,7 @@ public class Absence extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     int hourOfAbsence;
-    Long studentId;
+    UUID studentId;
     String course;
     String courseGroup;
     int absenceDate;
