@@ -116,16 +116,22 @@ public class FakeDataService {
     }
 
     private void generateCourses() {
-        for (int i = 0; i < 5; i++) {
-            Course course = new Course();
-            course.setName(faker.company().name());
-            courseRepository.save(course);
-        }
+        Course course1 = Course.builder()
+                .name("GROUP1")
+                .build();
+        courseRepository.save(course1);
+
+        Course course2 = Course.builder()
+                .name("GROUP2")
+                .build();
+        courseRepository.save(course2);
     }
 
-    private void generateCourseGroups() {
 
+    private void generateCourseGroups() {
         String[] courseNames = {"Java", "Phyton", ".Net"};
+        Long group1Id = 1L;
+        Long group2Id = 2L;
         for (int i = 0; i < 10; i++) {
             String selectedCourseName = courseNames[new Random().nextInt(courseNames.length)];
             int versionNumber = new Random().nextInt(6) + 5;
@@ -134,7 +140,7 @@ public class FakeDataService {
 
             CourseGroup courseGroup = CourseGroup.builder()
                     .name(courseGroupName)
-                    .courseId((long) faker.number().numberBetween(1, 5))
+                    .courseId((long) faker.number().numberBetween(1, 2))
                     .branchId((long) faker.number().numberBetween(1, 5))
                     .startDate(generateRandomLocalDate(LocalDate.now(), LocalDate.now().plusMonths(3)))
                     .endDate(generateRandomLocalDate(LocalDate.now().plusMonths(3), LocalDate.now().plusMonths(6)))
@@ -188,7 +194,7 @@ public class FakeDataService {
                     int hourOfAbsenceLimit = (int) Math.ceil(totalCourseHours * 0.10);
 
                     Absence absence = new Absence();
-                    absence.setStudentId(student.getId());
+                    absence.setStudentId(student.getUuid());
                     absence.setCourse(course.getName());
                     absence.setCourseGroup(courseGroup.getName());
                     absence.setAbsenceDate(faker.number().numberBetween(1, 365));

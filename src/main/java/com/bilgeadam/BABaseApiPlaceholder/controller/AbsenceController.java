@@ -1,5 +1,6 @@
 package com.bilgeadam.BABaseApiPlaceholder.controller;
 
+import com.bilgeadam.BABaseApiPlaceholder.dto.request.SendAbsenceRequestDto;
 import com.bilgeadam.BABaseApiPlaceholder.repository.entity.Absence;
 import com.bilgeadam.BABaseApiPlaceholder.service.AbsenceService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,12 @@ public class AbsenceController {
     public ResponseEntity<List<Absence>> getAllAbsences(){
         List<Absence> absences = absenceService.findAll();
         return ResponseEntity.ok(absences);
+    }
+
+    @GetMapping("/find-all-base-absences")
+    public ResponseEntity<List<SendAbsenceRequestDto>> findAllAbsences(){
+        List<SendAbsenceRequestDto> absenceRequestDtos = absenceService.findAllAbsences();
+        return ResponseEntity.ok(absenceRequestDtos);
     }
 
 }
