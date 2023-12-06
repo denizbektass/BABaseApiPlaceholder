@@ -1,25 +1,19 @@
-package com.bilgeadam.BABaseApiPlaceholder.repository.entity;
+package com.bilgeadam.BABaseApiPlaceholder.dto.response;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
-
-import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@SuperBuilder
+@Builder
 @Data
-@Entity
-public class Absence extends BaseEntity{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    UUID studentId;
-    String course;
-    String courseGroup;
+public class SendAbsenceResponseDto {
+    String absenceId;
+    String userId;
+    String group;
+    String groupName;
     int absenceDateTheo;
     int hourOfAbsenceTheo;
     int totalCourseHoursTheo;
@@ -28,5 +22,4 @@ public class Absence extends BaseEntity{
     int hourOfAbsencePrac;
     int totalCourseHoursPrac;
     int hourOfAbsenceLimitPrac;
-
 }

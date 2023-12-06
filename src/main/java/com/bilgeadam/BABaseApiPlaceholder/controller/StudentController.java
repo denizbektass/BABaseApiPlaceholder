@@ -1,9 +1,7 @@
 package com.bilgeadam.BABaseApiPlaceholder.controller;
 
-import com.bilgeadam.BABaseApiPlaceholder.dto.request.SendStudentsRequestDto;
-import com.bilgeadam.BABaseApiPlaceholder.repository.entity.CourseGroup;
+import com.bilgeadam.BABaseApiPlaceholder.dto.response.SendStudentsResponseDto;
 import com.bilgeadam.BABaseApiPlaceholder.repository.entity.Student;
-import com.bilgeadam.BABaseApiPlaceholder.repository.entity.Trainer;
 import com.bilgeadam.BABaseApiPlaceholder.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -41,8 +39,8 @@ public class StudentController {
     }
 
     @GetMapping("/find-all-base-students")
-    public ResponseEntity<List<SendStudentsRequestDto>> findAllBaseStudents() {
-        List<SendStudentsRequestDto> studentDtos = studentService.findAllBaseStudents();
+    public ResponseEntity<List<SendStudentsResponseDto>> findAllBaseStudents() {
+        List<SendStudentsResponseDto> studentDtos = studentService.findAllBaseStudents();
         return ResponseEntity.ok(studentDtos);
     }
 

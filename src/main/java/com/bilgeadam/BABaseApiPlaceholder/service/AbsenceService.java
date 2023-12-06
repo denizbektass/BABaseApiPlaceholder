@@ -1,6 +1,6 @@
 package com.bilgeadam.BABaseApiPlaceholder.service;
 
-import com.bilgeadam.BABaseApiPlaceholder.dto.request.SendAbsenceRequestDto;
+import com.bilgeadam.BABaseApiPlaceholder.dto.response.SendAbsenceResponseDto;
 import com.bilgeadam.BABaseApiPlaceholder.manager.IAbsenceManager;
 import com.bilgeadam.BABaseApiPlaceholder.repository.IAbsenceRepository;
 import com.bilgeadam.BABaseApiPlaceholder.repository.entity.Absence;
@@ -21,23 +21,27 @@ public class AbsenceService extends ServiceManager<Absence,Long> {
         this.absenceManager = absenceManager;
     }
 
-    public List<SendAbsenceRequestDto> findAllAbsences(){
+    public List<SendAbsenceResponseDto> findAllAbsences(){
         List<Absence> absences = absenceRepository.findAll();
         return convertToDtoList(absences);
     }
 
-    private List<SendAbsenceRequestDto> convertToDtoList(List<Absence> absences){
-        List<SendAbsenceRequestDto> absenceRequestDtos = new ArrayList<>();
+    private List<SendAbsenceResponseDto> convertToDtoList(List<Absence> absences){
+        List<SendAbsenceResponseDto> absenceRequestDtos = new ArrayList<>();
         for (Absence absence : absences){
-            SendAbsenceRequestDto dto = new SendAbsenceRequestDto();
+            SendAbsenceResponseDto dto = new SendAbsenceResponseDto();
             dto.setAbsenceId(absence.getUuid().toString());
             dto.setUserId(absence.getStudentId().toString());
-            dto.setAbsenceDate(absence.getAbsenceDate());
             dto.setGroup(absence.getCourse());
             dto.setGroupName(absence.getCourseGroup());
-            dto.setHourOfAbsence(absence.getHourOfAbsence());
-            dto.setTotalCourseHours(absence.getTotalCourseHours());
-            dto.setHourOfAbsenceLimit(absence.getHourOfAbsenceLimit());
+            dto.setAbsenceDateTheo(absence.getAbsenceDateTheo());
+            dto.setAbsenceDatePrac(absence.getAbsenceDatePrac());
+            dto.setHourOfAbsenceTheo(absence.getHourOfAbsenceTheo());
+            dto.setHourOfAbsencePrac(absence.getHourOfAbsencePrac());
+            dto.setTotalCourseHoursTheo(absence.getTotalCourseHoursTheo());
+            dto.setTotalCourseHoursPrac(absence.getTotalCourseHoursPrac());
+            dto.setHourOfAbsenceLimitTheo(absence.getHourOfAbsenceLimitTheo());
+            dto.setHourOfAbsenceLimitPrac(absence.getHourOfAbsenceLimitPrac());
             absenceRequestDtos.add(dto);
         }
         return absenceRequestDtos;
