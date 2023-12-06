@@ -11,12 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
-
 @Service
 public class FakeDataService {
     private final Faker faker;
@@ -117,30 +113,31 @@ public class FakeDataService {
 
     private void generateCourses() {
         Course course1 = Course.builder()
-                .name("GROUP1")
+                .name("Boost Java Eğitimi")
                 .build();
         courseRepository.save(course1);
 
         Course course2 = Course.builder()
-                .name("GROUP2")
+                .name("Boost .Net Eğitimi")
                 .build();
         courseRepository.save(course2);
     }
 
 
     private void generateCourseGroups() {
-        String[] courseNames = {"Java", "Phyton", ".Net"};
-        Long group1Id = 1L;
-        Long group2Id = 2L;
+        String[] courseNames = {"Java", ".Net"};
         for (int i = 0; i < 10; i++) {
             String selectedCourseName = courseNames[new Random().nextInt(courseNames.length)];
             int versionNumber = new Random().nextInt(6) + 5;
             String courseGroupName = selectedCourseName + versionNumber;
             int totalCourseHours = faker.number().numberBetween(30, 600);
 
+            // Java eğitimi ID 1, .Net eğitimi ID 2
+            long courseId = selectedCourseName.equals("Java") ? 1L : 2L;
+
             CourseGroup courseGroup = CourseGroup.builder()
                     .name(courseGroupName)
-                    .courseId((long) faker.number().numberBetween(1, 2))
+                    .courseId(courseId) // Java için ID 1, .Net için ID 2
                     .branchId((long) faker.number().numberBetween(1, 5))
                     .startDate(generateRandomLocalDate(LocalDate.now(), LocalDate.now().plusMonths(3)))
                     .endDate(generateRandomLocalDate(LocalDate.now().plusMonths(3), LocalDate.now().plusMonths(6)))
@@ -150,6 +147,7 @@ public class FakeDataService {
             courseGroupRepository.save(courseGroup);
         }
     }
+
 
     private List<Long> generateTrainerIds(int count) {
         List<Long> trainerIds = new ArrayList<>();
@@ -179,7 +177,7 @@ public class FakeDataService {
                 faker.number().numberBetween(1000, 9999));
     }
 
-    private void generateAbsences(){
+    /*private void generateAbsences(){
         List<Student> students = studentRepository.findAll();
         List<Course> courses = courseRepository.findAll();
 
@@ -208,7 +206,55 @@ public class FakeDataService {
                 }
             }
         }
+    }*/
+
+    private void generateAbsences(){
+        List<Student> students = studentRepository.findAll();
+        List<Course> courses = courseRepository.findAll();
+
+        for (Student student : students){
+            Optional<CourseGroup> courseGroupOpt = courseGroupRepository.findById(student.getGroupId());
+            if (courseGroupOpt.isPresent()) {
+                CourseGroup courseGroup = courseGroupOpt.get();
+                Optional<Course> courseOpt = courses.stream().filter(c -> c.getId().equals(courseGroup.getCourseId())).findFirst();
+                if (courseOpt.isPresent()){
+                    Course course = courseOpt.get();
+                    int totalCourseHours = courseGroup.getTotalCourseHours();
+                    int hourOfAbsenceLimitTheo = (int) Math.ceil(totalCourseHours * 0.10);
+                    int hourOfAbsenceLimitPrac = (int) Math.ceil(totalCourseHours * 0.10);
+
+                    // Teorik Yoklama
+                    Absence absenceTheo = new Absence();
+                    absenceTheo.setStudentId(student.getUuid());
+                    absenceTheo.setCourse(course.getName());
+                    absenceTheo.setCourseGroup(courseGroup.getName());
+                    absenceTheo.setAbsenceDateTheo(faker.number().numberBetween(1, 365));
+                    absenceTheo.setHourOfAbsenceTheo(faker.number().numberBetween(0, hourOfAbsenceLimitTheo));
+                    absenceTheo.setTotalCourseHoursTheo(totalCourseHours);
+                    absenceTheo.setHourOfAbsenceLimitTheo(hourOfAbsenceLimitTheo);
+                    absenceTheo.setCreateDate(generateRandomEpochDay(LocalDate.now(), LocalDate.now().plusMonths(3)));
+                    absenceTheo.setUpdateDate(generateRandomEpochDay(LocalDate.now().plusMonths(3), LocalDate.now().plusMonths(6)));
+                    absenceRepository.save(absenceTheo);
+
+                    // Pratik Yoklama
+                    Absence absencePrac = new Absence();
+                    absencePrac.setStudentId(student.getUuid());
+                    absencePrac.setCourse(course.getName());
+                    absencePrac.setCourseGroup(courseGroup.getName());
+                    absencePrac.setAbsenceDatePrac(faker.number().numberBetween(1, 365));
+                    absencePrac.setHourOfAbsencePrac(faker.number().numberBetween(0, hourOfAbsenceLimitPrac));
+                    absencePrac.setTotalCourseHoursPrac(totalCourseHours);
+                    absencePrac.setHourOfAbsenceLimitPrac(hourOfAbsenceLimitPrac);
+                    absencePrac.setCreateDate(generateRandomEpochDay(LocalDate.now(), LocalDate.now().plusMonths(3)));
+                    absencePrac.setUpdateDate(generateRandomEpochDay(LocalDate.now().plusMonths(3), LocalDate.now().plusMonths(6)));
+                    absenceRepository.save(absencePrac);
+                }
+            }
+        }
     }
+
+
+
 
 
 

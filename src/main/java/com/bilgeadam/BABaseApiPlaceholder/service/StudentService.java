@@ -1,6 +1,6 @@
 package com.bilgeadam.BABaseApiPlaceholder.service;
 
-import com.bilgeadam.BABaseApiPlaceholder.dto.request.SendStudentsRequestDto;
+import com.bilgeadam.BABaseApiPlaceholder.dto.response.SendStudentsResponseDto;
 import com.bilgeadam.BABaseApiPlaceholder.exception.ErrorType;
 import com.bilgeadam.BABaseApiPlaceholder.exception.StudentManagerException;
 import com.bilgeadam.BABaseApiPlaceholder.manager.IUserManager;
@@ -22,17 +22,17 @@ public class StudentService extends ServiceManager<Student,Long> {
         this.userManager = userManager;
     }
 
-    public List<SendStudentsRequestDto> findAllBaseStudents() {
+    public List<SendStudentsResponseDto> findAllBaseStudents() {
         List<Student> students = studentRepository.findAll();
 
         return convertToDtoList(students);
     }
 
-    private List<SendStudentsRequestDto> convertToDtoList(List<Student> students) {
-        List<SendStudentsRequestDto> studentDtos = new ArrayList<>();
+    private List<SendStudentsResponseDto> convertToDtoList(List<Student> students) {
+        List<SendStudentsResponseDto> studentDtos = new ArrayList<>();
 
         for (Student student : students) {
-            SendStudentsRequestDto dto = new SendStudentsRequestDto();
+            SendStudentsResponseDto dto = new SendStudentsResponseDto();
             dto.setUserId(student.getUuid().toString());
             dto.setName(student.getName());
             dto.setSurname(student.getSurname());

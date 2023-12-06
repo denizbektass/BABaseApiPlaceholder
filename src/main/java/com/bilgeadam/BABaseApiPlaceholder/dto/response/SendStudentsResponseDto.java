@@ -1,4 +1,4 @@
-package com.bilgeadam.BABaseApiPlaceholder.dto.request;
+package com.bilgeadam.BABaseApiPlaceholder.dto.response;
 
 import com.bilgeadam.BABaseApiPlaceholder.repository.enums.EStatus;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SendStudentsRequestDto {
+public class SendStudentsResponseDto {
     private String userId;
     private String name;
     private String surname;
