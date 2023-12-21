@@ -65,6 +65,11 @@ public class FakeDataService {
             String cityBorn = faker.address().city();
             LocalDate birthdayDate = faker.date().birthday().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             CourseGroup randomCourseGroup = allCourseGroups.get(random.nextInt(allCourseGroups.size()));
+            LocalDate saleDate = faker.date()
+                    .between(
+                            Date.from(LocalDate.now().minusYears(3).atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                            Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant())
+                    ).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
 
             student.setName(firstName);
@@ -83,6 +88,7 @@ public class FakeDataService {
             student.setCreateDate(generateRandomEpochDay(LocalDate.now(), LocalDate.now().plusMonths(3)));
             student.setUpdateDate(generateRandomEpochDay(LocalDate.now().plusMonths(3), LocalDate.now().plusMonths(6)));
             student.setCourseName(randomCourseGroup.getName());
+            student.setSaleDate(saleDate);
             studentRepository.save(student);
         }
     }
