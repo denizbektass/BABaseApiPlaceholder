@@ -27,4 +27,5 @@ public class SendStudentsResponseDto {
     private EStatus status;
     private EStatus internShipStatus;
     private List<String> groupNameList;
+    private LocalDate saleDate;
 }

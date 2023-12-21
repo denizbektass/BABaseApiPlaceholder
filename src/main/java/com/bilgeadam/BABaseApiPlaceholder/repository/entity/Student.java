@@ -38,5 +38,6 @@ public class Student extends BaseEntity {
     private String courseName;
     private Long groupId;
     private Long branchId;
+    private LocalDate saleDate;
 
 }
