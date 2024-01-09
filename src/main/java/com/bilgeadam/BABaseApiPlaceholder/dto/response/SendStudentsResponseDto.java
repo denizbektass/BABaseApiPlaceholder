@@ -28,4 +28,6 @@ public class SendStudentsResponseDto {
     private EStatus internShipStatus;
     private List<String> groupNameList;
     private LocalDate saleDate;
+    private Long updateDate;
+
 }
