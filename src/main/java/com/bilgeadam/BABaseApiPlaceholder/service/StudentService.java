@@ -25,6 +25,7 @@ public class StudentService extends ServiceManager<Student,Long> {
     public List<SendStudentsResponseDto> findAllBaseStudents() {
         List<Student> students = studentRepository.findAll();
 
+
         return convertToDtoList(students);
     }
 
@@ -46,6 +47,8 @@ public class StudentService extends ServiceManager<Student,Long> {
             dto.setStatus(student.getStatus());
             dto.setInternShipStatus(student.getInternShipStatus());
             dto.setGroupNameList(List.of(student.getCourseName()));
+            dto.setUpdateDate(student.getUpdateDate());
+            dto.setSaleDate(student.getSaleDate());
             studentDtos.add(dto);
         }
 
